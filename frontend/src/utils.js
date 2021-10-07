@@ -8,15 +8,13 @@ export const login = (credential) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', //把cookie带上
+    credentials: 'include', 
     body: JSON.stringify(credential)
   }).then((response) => {
     if (response.status !== 200) {
       throw Error('Fail to log in');
     }
-    //发送一个请求，带回来response，看一眼response.status,不等于200 就fail。
- 
-    return response.json();//翻译response的信息并返回
+    return response.json();
   })
 }
  
