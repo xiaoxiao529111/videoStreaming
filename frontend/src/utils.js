@@ -8,7 +8,7 @@ export const login = (credential) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', //把cookie带上
+    credentials: 'include', 
     body: JSON.stringify(credential)
   }).then((response) => {
     if (response.status !== 200) {
