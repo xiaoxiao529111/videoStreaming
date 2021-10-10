@@ -7,13 +7,25 @@ import Favorites from './components/Favorites';
 import { LikeOutlined, FireOutlined } from '@ant-design/icons';
 import CustomSearch from './components/CustomSearch';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import Home from './components/Home';
  
 const { Header, Content, Sider } = Layout;
  
 class App extends React.Component {
   state = {
     loggedIn: false,
-    topGames: []
+    topGames: [],
+    resources: {
+      VIDEO: [],
+      STREAM: [],
+      CLIP: [],
+    },
+  }
+ 
+  customSearchOnSuccess = (data) => {
+    this.setState({
+      resources: data,
+    })
   }
  
   signinOnSuccess = () => {
@@ -73,15 +85,15 @@ class App extends React.Component {
       </Header>
       <Layout>
         <Sider width={300} className="site-layout-background">
-          <CustomSearch />
+          <CustomSearch onSuccess={this.customSearchOnSuccess} />
           <Menu
             mode="inline"
             onSelect={() => {}}
-  		 style={{ marginTop: '10px' }}
+            style={{ marginTop: '10px' }}
           >
             <Menu.Item icon={<LikeOutlined />} key="Recommendation">
               Recommend for you!</Menu.Item>
-            <SubMenu icon={<FireOutlined />} key="Popular Games" title="Popular Games" className="site-top-game-list" >
+            <SubMenu icon={<FireOutlined />} key="Popular Games" title="Popular Games" className="site-top-game-list">
               {
                 this.state.topGames.map((game) => {
                   return (
@@ -111,7 +123,7 @@ class App extends React.Component {
               overflow: 'auto'
             }}
           >
-            {'Home'}
+            <Home resources={this.state.resources} loggedIn={this.state.loggedIn} />
           </Content>
         </Layout>
       </Layout>
@@ -120,3 +132,4 @@ class App extends React.Component {
 }
  
 export default App;
+ 
