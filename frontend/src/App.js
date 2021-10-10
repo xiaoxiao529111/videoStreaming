@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Layout, Menu, message, Row } from 'antd';
 import Login from './components/Login';
 import Register from './components/Register';
-import { getTopGames, logout } from './utils';
+import { getRecommendations, getTopGames, logout, searchGameById } from './utils';
 import Favorites from './components/Favorites';
 import { LikeOutlined, FireOutlined } from '@ant-design/icons';
 import CustomSearch from './components/CustomSearch';
@@ -20,6 +20,24 @@ class App extends React.Component {
       STREAM: [],
       CLIP: [],
     },
+  }
+ 
+  onGameSelect = ({ key }) => {
+    if (key === 'Recommendation') {
+      getRecommendations().then((data) => {
+        this.setState({
+          resources: data,
+        })
+      })
+ 
+      return;
+    }
+ 
+    searchGameById(key).then((data) => {
+      this.setState({
+        resources: data,
+      })
+    })
   }
  
   customSearchOnSuccess = (data) => {
@@ -88,7 +106,7 @@ class App extends React.Component {
           <CustomSearch onSuccess={this.customSearchOnSuccess} />
           <Menu
             mode="inline"
-            onSelect={() => {}}
+            onSelect={this.onGameSelect}
             style={{ marginTop: '10px' }}
           >
             <Menu.Item icon={<LikeOutlined />} key="Recommendation">
