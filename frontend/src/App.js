@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Layout, Menu, message, Row } from 'antd';
 import Login from './components/Login';
 import Register from './components/Register';
-import { getRecommendations, getTopGames, logout, searchGameById } from './utils';
+import { getFavoriteItem, getRecommendations, getTopGames, logout, searchGameById } from './utils';
 import Favorites from './components/Favorites';
 import { LikeOutlined, FireOutlined } from '@ant-design/icons';
 import CustomSearch from './components/CustomSearch';
@@ -20,6 +20,7 @@ class App extends React.Component {
       STREAM: [],
       CLIP: [],
     },
+    favoriteItems: [],
   }
  
   onGameSelect = ({ key }) => {
@@ -47,8 +48,13 @@ class App extends React.Component {
   }
  
   signinOnSuccess = () => {
-    this.setState({
-      loggedIn: true
+    getFavoriteItem().then((data) => {
+      this.setState({
+        favoriteItems: data,
+        loggedIn: true
+      })
+    }).catch((err) => {
+      message.error(err.message);
     })
   }
  
@@ -83,7 +89,7 @@ class App extends React.Component {
             <Col>
               {
                 this.state.loggedIn &&
-                <Favorites />
+                <Favorites data={this.state.favoriteItems} />
               }
             </Col>
             <Col>
@@ -150,4 +156,5 @@ class App extends React.Component {
 }
  
 export default App;
+
  
