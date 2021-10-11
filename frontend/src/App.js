@@ -20,7 +20,22 @@ class App extends React.Component {
       STREAM: [],
       CLIP: [],
     },
-    favoriteItems: [],
+    favoriteItems: {
+      VIDEO: [],
+      STREAM: [],
+      CLIP: [],
+    },
+  }
+ 
+  favoriteOnChange = () => {
+    getFavoriteItem().then((data) => {
+      this.setState({
+        favoriteItems: data,
+        loggedIn: true
+      })
+    }).catch((err) => {
+      message.error(err.message);
+    })
   }
  
   onGameSelect = ({ key }) => {
@@ -147,7 +162,12 @@ class App extends React.Component {
               overflow: 'auto'
             }}
           >
-            <Home resources={this.state.resources} loggedIn={this.state.loggedIn} />
+            <Home 
+              resources={this.state.resources} 
+              loggedIn={this.state.loggedIn} 
+              favoriteItems={this.state.favoriteItems} 
+              favoriteOnChange={this.favoriteOnChange}
+            />
           </Content>
         </Layout>
       </Layout>
