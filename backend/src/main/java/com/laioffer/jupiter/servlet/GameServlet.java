@@ -31,12 +31,6 @@ public class GameServlet extends HttpServlet {
         } catch (TwitchException e) {
             throw new ServletException(e);
         }
-        
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-    }
 }
