@@ -33,8 +33,7 @@ public class FavoriteServlet extends HttpServlet {
             // Read the favorite items from the database
             connection = new MySQLConnection();
             itemMap = connection.getFavoriteItems(userId);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().print(new ObjectMapper().writeValueAsString(itemMap));
+            ServletUtil.writeItemMap(response, itemMap);
         } catch (MySQLException e) {
             throw new ServletException(e);
         } finally {
